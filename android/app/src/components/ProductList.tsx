@@ -68,7 +68,6 @@ const ProductList: React.FC<Props> = ({ query }) => {
             <View style={styles.itemContent}>
               <Text style={styles.productName}>{item.name}</Text>
               <Text style={styles.productId}>ID: {item.id}</Text>
-              <Text style={styles.productDescription}>{item.description}</Text>
             </View>
             <View style={styles.arrowContainer}>
               <View style={styles.arrow} />

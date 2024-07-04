@@ -7,7 +7,6 @@ const App = () => {
   return (
     <NavigationContainer>
       <HomeScreen navigation={{}} /> 
-
     </NavigationContainer>
   );
 };
