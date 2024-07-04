@@ -21,7 +21,6 @@ const ProductList: React.FC<Props> = ({ query }) => {
   const fetchProducts = async () => {
     try {
       const response: Product[] = await getProducts();
-      //console.log('Respuesta de la API:', response);
       if (response) {
         setProducts(response);
         setTotalResults(response.length);
@@ -34,6 +33,19 @@ const ProductList: React.FC<Props> = ({ query }) => {
       setLoading(false);
     }
   };
+
+  useEffect(() => {
+    if (query.trim() === '') {
+      setTotalResults(products.length);
+      return;
+    }
+
+    const filteredProducts = products.filter(product =>
+      product.name.toLowerCase().includes(query.toLowerCase())
+    );
+    setTotalResults(filteredProducts.length);
+    setProducts(filteredProducts);
+  }, [query]);
 
   if (loading) {
     return <Text>Cargando...</Text>;

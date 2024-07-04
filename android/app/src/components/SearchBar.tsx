@@ -14,9 +14,9 @@ const SearchBar: React.FC<SearchBarProps> = ({ query, setQuery }) => {
         value={query}
         onChangeText={setQuery}
         placeholder="Search..."
-        autoFocus  
-        keyboardType="default"  
-        returnKeyType="search" 
+        autoFocus
+        keyboardType="default"
+        returnKeyType="search"
       />
     </View>
   );

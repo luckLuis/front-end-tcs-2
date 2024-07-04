@@ -8,7 +8,6 @@ const HomeScreen = ({ navigation }: { navigation: any }) => {
 
   console.log('Query:', query);
 
-  
   return (
     <View style={styles.container}>
       <SearchBar query={query} setQuery={setQuery} />
@@ -18,11 +17,11 @@ const HomeScreen = ({ navigation }: { navigation: any }) => {
   );
 };
 
-export default HomeScreen;
-
 const styles = StyleSheet.create({
   container: {
     flex: 1,
     padding: 10,
   },
 });
+
+export default HomeScreen;
