@@ -1,3 +1,4 @@
+
 export interface Product {
   id: string;
   name: string;
@@ -12,9 +13,10 @@ export interface RouteParams {
 }
 
 export type RootStackParamList = {
-  Home: {authorId?: string};
-  ProductDetails: {product: Product};
+  ProductList: undefined;
+  ProductDetail: { productId: string };
   AddProduct: undefined;
+  EditProduct: { productId: string };
 };
 
 export interface ProductErrors {

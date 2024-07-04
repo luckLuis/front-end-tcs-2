@@ -1,75 +1,59 @@
-import React, {useState} from 'react';
-import {View, Text, TextInput, Button} from 'react-native';
-import {validateProduct} from '../utils/validators';
-import {Product, ProductErrors} from '../types';
+import React, { useState } from 'react';
+import { View, Text, TextInput, Button, StyleSheet } from 'react-native';
+import { useNavigation } from '@react-navigation/native';
 
-const AddProductScreen = ({navigation}: {navigation: any}) => {
+const AddProductScreen: React.FC = () => {
+  const [id, setId] = useState('');
   const [name, setName] = useState('');
   const [description, setDescription] = useState('');
   const [logo, setLogo] = useState('');
   const [releaseDate, setReleaseDate] = useState('');
-  const [reviewDate, setReviewDate] = useState('');
-  const [errors, setErrors] = useState<ProductErrors>({});
+  const navigation = useNavigation();
 
   const handleAddProduct = () => {
-    // Convertir las fechas de string a objetos Date
-    const releaseDateObj = new Date(releaseDate);
-    const reviewDateObj = new Date(reviewDate);
+ 
+    console.log("Producto agregado");
+  };
 
-    const product: Product = {
-      id: '', // Aquí deberías asignar el ID según la lógica de tu aplicación
-      name,
-      description,
-      logo,
-      releaseDate: releaseDateObj,
-      reviewDate: reviewDateObj,
-    };
-
-    const validationErrors = validateProduct(product);
-    if (Object.keys(validationErrors).length > 0) {
-      setErrors(validationErrors);
-      return;
-    }
+  const handleResetForm = () => {
+    setId('');
+    setName('');
+    setDescription('');
+    setLogo('');
+    setReleaseDate('');
   };
 
   return (
-    <View>
-      <TextInput placeholder="Nombre" value={name} onChangeText={setName} />
-      {errors.name && <Text>{errors.name}</Text>}
-      <TextInput
-        placeholder="Descripción"
-        value={description}
-        onChangeText={setDescription}
-      />
-      {errors.description && <Text>{errors.description}</Text>}
-      <TextInput placeholder="Logo" value={logo} onChangeText={setLogo} />
-      {errors.logo && <Text>{errors.logo}</Text>}
-      <TextInput
-        placeholder="Fecha de Liberación (YYYY-MM-DD)"
-        value={releaseDate}
-        onChangeText={setReleaseDate}
-      />
-      {errors.releaseDate && <Text>{errors.releaseDate}</Text>}
-      <TextInput
-        placeholder="Fecha de Revisión (YYYY-MM-DD)"
-        value={reviewDate}
-        onChangeText={setReviewDate}
-      />
-      {errors.reviewDate && <Text>{errors.reviewDate}</Text>}
+    <View style={styles.container}>
+      <Text>ID:</Text>
+      <TextInput value={id} onChangeText={setId} style={styles.input} />
+      <Text>Nombre:</Text>
+      <TextInput value={name} onChangeText={setName} style={styles.input} />
+      <Text>Descripción:</Text>
+      <TextInput value={description} onChangeText={setDescription} style={styles.input} />
+      <Text>Logo:</Text>
+      <TextInput value={logo} onChangeText={setLogo} style={styles.input} />
+      <Text>Fecha de Liberación:</Text>
+      <TextInput value={releaseDate} onChangeText={setReleaseDate} style={styles.input} />
+
       <Button title="Agregar" onPress={handleAddProduct} />
-      <Button
-        title="Reiniciar"
-        onPress={() => {
-          setName('');
-          setDescription('');
-          setLogo('');
-          setReleaseDate('');
-          setReviewDate('');
-          setErrors({});
-        }}
-      />
+      <Button title="Reiniciar" onPress={handleResetForm} />
     </View>
   );
 };
+
+const styles = StyleSheet.create({
+  container: {
+    flex: 1,
+    padding: 20,
+  },
+  input: {
+    height: 40,
+    borderColor: 'gray',
+    borderWidth: 1,
+    marginBottom: 10,
+    paddingHorizontal: 10,
+  },
+});
 
 export default AddProductScreen;

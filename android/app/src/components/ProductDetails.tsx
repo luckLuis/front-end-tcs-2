@@ -1,33 +1,43 @@
 import React from 'react';
-import {View, Text} from 'react-native';
-import {RouteProp} from '@react-navigation/native';
-import {RootStackParamList, Product} from '../types';
-import {StackNavigationProp} from '@react-navigation/stack';
+import { View, Text, Image, StyleSheet } from 'react-native';
 
-type ProductDetailsRouteProp = RouteProp<RootStackParamList, 'ProductDetails'>;
-type ProductDetailsNavigationProp = StackNavigationProp<
-  RootStackParamList,
-  'ProductDetails'
->;
-
-type Props = {
-  route: ProductDetailsRouteProp;
-  navigation: ProductDetailsNavigationProp;
-};
-
-const ProductDetails: React.FC<Props> = ({route}) => {
-  const {product} = route.params;
+const ProductDetails = ({ route }: { route: any }) => {
+  const { product } = route.params;
 
   return (
-    <View>
-      <Text>Id: {product.id}</Text>
-      <Text>Nombre: {product.name}</Text>
-      <Text>Descripción: {product.description}</Text>
-      <Text>Logo: {product.logo}</Text>
-      <Text>Fecha de Liberación: {product.releaseDate.toISOString()}</Text>
-      <Text>Fecha de Revisión: {product.reviewDate.toISOString()}</Text>
+    <View style={styles.container}>
+      <Image source={{ uri: product.logo }} style={styles.logo} />
+      <Text style={styles.name}>{product.name}</Text>
+      <Text style={styles.description}>{product.description}</Text>
+      <Text style={styles.date}>Fecha de Liberación: <Text style={styles.dateValue}>{product.date_release}</Text></Text>
+      <Text style={styles.date}>Fecha de Revisión: <Text style={styles.dateValue}>{product.date_revision}</Text></Text>
     </View>
   );
 };
 
 export default ProductDetails;
+
+const styles = StyleSheet.create({
+  container: {
+    padding: 10,
+  },
+  logo: {
+    width: 100,
+    height: 100,
+  },
+  name: {
+    fontSize: 20,
+    fontWeight: 'bold',
+  },
+  description: {
+    fontSize: 16,
+    marginVertical: 10,
+  },
+  date: {
+    fontSize: 14,
+    marginTop: 5,
+  },
+  dateValue: {
+    fontWeight: 'bold',
+  },
+});

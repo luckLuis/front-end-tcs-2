@@ -1,25 +1,25 @@
-// AppNavigator.tsx
-
 import React from 'react';
-import {NavigationContainer} from '@react-navigation/native';
-import {createStackNavigator} from '@react-navigation/stack';
-import HomeScreen from '../screens/HomeScreen';
-import {RootStackParamList} from '../types';
+import { View, StyleSheet, Button } from 'react-native';
+import ProductList from '../components/ProductList';
+import SearchBar from '../components/SearchBar';
 
-const Stack = createStackNavigator<RootStackParamList>();
+const HomeScreen = ({ navigation }: { navigation: any }) => {
+  const [query, setQuery] = React.useState('');
 
-const AppNavigator = () => {
   return (
-    <NavigationContainer>
-      <Stack.Navigator initialRouteName="Home">
-        <Stack.Screen
-          name="Home"
-          component={HomeScreen}
-          initialParams={{authorId: '1234567'}}
-        />
-      </Stack.Navigator>
-    </NavigationContainer>
+    <View style={styles.container}>
+      <SearchBar query={query} setQuery={setQuery} />
+      <ProductList query={query} />
+      <Button title="Agregar Producto" onPress={() => navigation.navigate('AddProduct')} />
+    </View>
   );
 };
 
-export default AppNavigator;
+export default HomeScreen;
+
+const styles = StyleSheet.create({
+  container: {
+    flex: 1,
+    padding: 10,
+  },
+});

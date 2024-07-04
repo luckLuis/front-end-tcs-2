@@ -1,31 +1,28 @@
-import axios, {AxiosError} from 'axios';
+import axios from 'axios';
 
-const API_URL =
-  'https://tribu-ti-staffing-desarrollo-afangwbmcrhucqfh.z01.azurefd.net/ipf-msa-productosfinancieros';
+const API_BASE_URL = 'https://tribu-ti-staffing-desarrollo-afangwbmcrhucqfh.z01.azurefd.net/ipf-msa-productosfinancieros';
+const AUTHOR_ID = '1723855472';
 
-export const getFinancialProducts = async (authorId: string) => {
+const api = axios.create({
+  baseURL: API_BASE_URL,
+  headers: {
+    authorId: AUTHOR_ID,
+  },
+});
+
+export const getProducts = async () => {
   try {
-    const response = await axios.get(`${API_URL}/bp/products`, {
-      headers: {
-        authorId: authorId,
-      },
-    });
+    const response = await api.get('/bp/products');
     return response.data;
-  } catch (error: any) {
-    if (axios.isAxiosError(error)) {
-      if (error.response) {
-        console.error('Error de respuesta:', error.response.data);
-        throw new Error('Error al obtener productos financieros');
-      } else if (error.request) {
-        console.error('No se recibió respuesta:', error.request);
-        throw new Error('No se recibió respuesta del servidor');
-      } else {
-        console.error('Error al configurar la solicitud:', error.message);
-        throw new Error('Error de configuración de la solicitud');
-      }
-    } else {
-      console.error('Error desconocido:', error);
-      throw new Error('Error desconocido al obtener productos financieros');
-    }
+  } catch (error) {
+    console.error('Error al obtener productos:', error);
+    throw error;
   }
 };
+
+export const verifyProductId = (id: string) => api.get(`/bp/products/verification?id=${id}`);
+export const createProduct = (product: any) => api.post('/bp/products', product);
+export const updateProduct = (product: any) => api.put('/bp/products', product);
+export const deleteProduct = (id: string) => api.delete(`/bp/products?id=${id}`);
+
+export default api;
